@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Group Detail</title>
+</head>
+<body>
+    <h1>{{ group.name }}</h1>
+    <div id="chat"></div>
+
+    <script>
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/group/{{ group.id }}/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const chat = document.getElementById('chat');
+            chat.innerHTML += '<p>' + data.message + '</p>';
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+    </script>
+</body>
+</html>

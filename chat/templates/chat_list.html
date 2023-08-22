@@ -1,0 +1,41 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat List</title>
+</head>
+<body>
+    <h1>Chat List</h1>
+    <ul>
+        {% for user in users %}
+            <li><a href="{% url 'chat' user.username %}">{{ user.username }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+{% else %}
+<div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>You are not logged in</h5>
+        <a href="/accounts/logout/">
+          <button type="button" class="btn btn-light"><a href="{% url 'login' %}">Log In</a></button>
+        </a>
+      </div>
+</div>  
+{% endif %}
+
+<br/>
+
+    
+
+
+
+
+{% endblock %}

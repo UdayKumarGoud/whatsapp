@@ -1,0 +1,140 @@
+<!-- myapp/templates/chat.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with {{ recipient_username }}</title>
+    <style>
+        .message-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 60%;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 10px;
+        }
+
+        .left-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        .right-message {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat with {{ recipient_username }}</h1>
+    <div class="message-container">
+        {% for message in messages %}
+        {% if forloop.counter0|divisibleby:2 %}  {# Check if the loop index is even #}
+            {% if message.sender == request.user %}
+                <div class="message right-message">
+                    <p>{{ message.content }}</p>
+                    <p style="font-size: 0.8rem; text-align: right;">{{ message.timestamp }}</p>
+                </div>
+            {% else %}
+                <div class="message left-message">
+                    <p>{{ message.content }}</p>
+                    <p style="font-size: 0.8rem; text-align: left;">{{ message.timestamp }}</p>
+                </div>
+            {% endif %}
+        {% else %} {# For odd loop index #}
+            {% if message.sender == request.user %}
+                <div class="message left-message">
+                    <p>{{ message.content }}</p>
+                    <p style="font-size: 0.8rem; text-align: left;">{{ message.timestamp }}</p>
+                </div>
+            {% else %}
+                <div class="message right-message">
+                    <p>{{ message.content }}</p>
+                    <p style="font-size: 0.8rem; text-align: right;">{{ message.timestamp }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <div>
+        <input type="text" id="message-input">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    {% comment %} <script>
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            console.log(data);
+            document.querySelector('#chat-log').innerHTML += (data.sender + ': ' + data.message + '<br>');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        function sendMessage() {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            const recipient = "{{ recipient_username }}";
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'recipient': recipient,
+            }));
+            messageInputDom.value = '';
+        }
+    </script> {% endcomment %}
+    <script>
+        var chatLog = document.getElementById('chat-log');
+        var messageInput = document.getElementById('message-input');
+
+        function appendMessage(sender, message) {
+            var div = document.createElement('div');
+            if (sender === '{{ request.user.username }}') {
+                div.className = 'message-container message-left';
+                div.style.textAlign = 'right';
+                div.className.innerHTML = '<span>' + message + '</span><span> - You</span>';
+            } else {
+                div.className = 'message-container message-right';
+                div.style.textAlign = 'left';
+                div.innerHTML = '<span>' + message + '</span><span> - ' + sender + '</span>';
+            }
+            div.innerText = message;
+            chatLog.appendChild(div);
+        }
+
+        var socket = new WebSocket('ws://' + window.location.host + '/ws/chat/');
+
+        socket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+            appendMessage(data.sender, data.message);
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // Enter key
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+        function sendMessage() {
+            console.log(messageInput.value, "{{recipient_username}}")
+            var message = messageInput.value;
+            if (message.trim() === '') return;
+
+            var data = {
+                'message': message,
+                'recipient': "{{ recipient_username }}"
+            };
+
+            socket.send(JSON.stringify(data));
+            messageInput.value = '';
+        }
+    </script>
+</body>
+</html>

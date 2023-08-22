@@ -1,0 +1,168 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        {% comment %} body{
+            font-family: 'inter', sans-serif;
+        } {% endcomment %}
+        .main{
+            width: 100%;
+            padding: 20px 0px;
+            background-color: white;
+            margin: 10px auto;
+            border: 1px solid gray;
+        }
+        .one>img{
+            width: 80%;
+            margin: 10px 20px;
+            padding: 10px 80px;
+            border-radius: 10px;
+        } 
+        .img{
+            width: 150px;
+            background-color: #3A9974;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        .t2{
+            font-size: 30px;
+            padding: 20px 0px;
+        }
+        .t4>p{
+            font-size: 15px;
+            font-weight: lighter;
+            padding-bottom: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .t5{
+            font-size: 25px;
+        }
+        .para{
+            margin-top: 5px;
+            padding: 5px 10px;
+        }
+        td>p{
+            font-size: 25px;
+            padding-left: 35px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .button_admin{
+            width: 100%;
+            padding: 12px 12px;
+            margin: 10px auto;
+            font-size: 15px;
+            border-radius: 10px;
+            border: none;
+            background-color: #3A9974;
+            color: white;
+            text-decoration: none;
+            margin-bottom : 15px;
+        }
+        .img1{
+            width: 120px;
+            margin-left: -20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        td>img{
+            width: 100%;
+            margin: 20px auto;
+        }
+        .img2{
+            width: 118px;
+            margin-left: -15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        hr{
+            width: 80%;
+            margin: 10px auto;
+            margin-top: 30px;
+        }
+        .img3{
+            width: 30px;
+            margin-top: 10px;
+        }
+        .copy{
+            padding-left: 65px;
+            margin-bottom: 20px;
+        }
+        a>img{
+            width: 100px;
+            border-radius: 0px;
+        }
+        {% comment %} a{
+            border: none;
+            margin-left: 20px;
+            margin-top: 20px;
+        } {% endcomment %}
+        .footerLogo{
+            width: 30px;
+            margin-top: 10px;
+        }
+        .para>.par{
+            padding-left: 50px;
+        }
+        .support-email>a{
+            margin:0px;
+            padding:0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <center>
+            <table>
+                <tr>
+                    <th class='one'><img class="img" src="https://s3.us-east-2.amazonaws.com/paysitters.com/ps-logotype-white.png" alt=""></th>
+                </tr>
+            </table>
+        </center>
+        <center>
+            <table>
+                    <tr>
+                        <th class='t2'><strong>Your PaySitters Development Admin Credentials</strong></th>
+                    </tr>
+                    <tr>
+                        <th class='t4'><p>Hi {{name}},</p></th>
+                    </tr>
+            </table>
+        </center>
+        <p class='para'><center>Please log in using your provided email address and the password "{{password}}". To login with OTP, please scan the QR code using your authenticator app. <br/> The QR code can be found in the attached PDF file. Once you have scanned the code, you will receive an OTP that you can use to log in.</center></p>
+        <br/>
+        <br/>
+        <center>
+            <table>
+                <tr>
+                    <th><a class='button_admin' href={{loginUrl}} style = "color:white;">PaySitters Admin Panel</a></th>
+                </tr>
+            </table>
+            <br/>
+            <center class="support-email">Please note that this admin panel is used to securely access your account. Upon logging in, you will be asked to OTP using Authenticator app. <br/>
+                If you encounter any issues while logging in, please reach out to us at support@paysitters.com.</center>
+            <hr/>
+        </center>
+        <center>
+            <table>
+                <center>
+                    <tr>
+                        <th><img  class="footerLogo" src="https://s3.us-east-2.amazonaws.com/paysitters.com/footerLogo.png" alt=""></th>
+                    </tr>
+                    <tr>
+                        <td>@ PaySitters 2023</td>
+                    </tr>
+                </center>
+            </table>
+        </center>
+    </div>
+</body>
+</html>

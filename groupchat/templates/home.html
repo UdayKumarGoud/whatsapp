@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Group Chat List</title>
+</head>
+<body>  
+    {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+    {% if user %}
+        <!-- Show content for authenticated users -->
+        <p>Welcome, {{ user.username }}!</p>
+        <h1>Group Chat List</h1>
+        <ul>
+            {% for chat in groups %}
+                <li><a href="{% url 'group_app:chat_room' chat.id %}?token={{ request.session.token }}">{{ chat.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <!-- Show content for anonymous users -->
+        <p>Please log in to access this page.</p>
+    {% endif %}
+</body>
+</html>

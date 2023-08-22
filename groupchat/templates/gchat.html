@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Group Chat</title>
+</head>
+<body>
+    <textarea id="chat-log" rows="10" cols="50" readonly></textarea><br>
+    <input id="chat-message-input" type="text" size="40">
+    <input id="chat-message-submit" type="button" value="Send">
+    
+    <script>
+        var chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/groupchat/'
+            + '{{ group_name }}/' + '?token={{ request.session.token }}');
+
+        chatSocket.onmessage = function(e) {
+            var message = JSON.parse(e.data)['message'];
+            document.querySelector('#chat-log').value += (message + '\n');
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            var messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>
